@@ -1,7 +1,4 @@
--- Class: CSE 3330-001
--- Semester: Fall 2018
--- Student Name: Babu, Ashwin, axb2860
--- Student ID: 1001392860
+-- Student Name: Babu, Ashwin
 -- Assignment: project #1
 
 -- Creating tables for databases
