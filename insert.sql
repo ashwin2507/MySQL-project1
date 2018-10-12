@@ -1,0 +1,172 @@
+-- Class: CSE 3330-001
+-- Semester: Fall 2018
+-- Student Name: Babu, Ashwin, axb2860
+-- Student ID: 1001392860
+-- Assignment: project #1
+
+-- Inserting data for Table  `Airport`
+
+LOCK TABLES Airport WRITE;
+
+INSERT INTO Airport VALUES('DFW','Dallas','TX'),('LOG','BOSTON','MA'),
+('ORD','Chicago','IL'),('MDW','Chicago','IL'),
+('JFK','New York','NY'),('LGA','New York','NY'),
+('INT','Houston','TX'),('LAX','Los Angeles','CA');
+
+UNLOCK TABLES;
+
+
+
+-- Inserting data for Table  `PlaneType`
+
+LOCK TABLES PlaneType WRITE;
+
+INSERT INTO PlaneType VALUES('MD','MD11',600,180),('MD','SUPER80',500,170),
+('BOEING','727',10,160),('BOEING','757',650,160),
+('AIRBUS','A300',620,150),('AIRBUS','A320',700,180);
+
+UNLOCK TABLES;
+
+
+-- Inserting data for Table  `Pilot`
+
+LOCK TABLES Pilot WRITE;
+
+INSERT INTO Pilot VALUES(1,'Jones','1990-05-10'),(2,'Adams','1990-06-01'),
+(3,'Walker','1991-07-02'),(4,'Flores','1992-04-01'),
+(5,'Thompson','1990-04-10'),(6,'Dean','1993-09-02'),
+(7,'Carter','1994-08-01'),(8,'Mango','1995-05-02');
+
+UNLOCK TABLES;
+
+-- Inserting data for Table  `Flight`
+
+LOCK TABLES Flight WRITE;
+
+INSERT INTO Flight VALUES(1000,'Bistro','Y'),(1010,'Meal','N'),
+(1020,'Meal','Y'),(1030,'Snack','N'),(1040,'Meal','N');
+
+UNLOCK TABLES;
+
+-- Inserting data for Table `Passenger`
+
+LOCK TABLES Passenger WRITE;
+
+INSERT INTO Passenger VALUES(1,'Jones','(972)999-1111'),(2,'James','(214)111-9999'),
+(3,'Henry','(214)222-1111'),(4,'Luis','(972)111-3333'),
+(5,'Howard','(972)333-1111'),(6,'Frank','(214)111-5555'),
+(7,'Frankel','(972)111-2222'),(8,'Bushnell','(214)111-4444'),
+(9,'Camden','(214)222-5555'),(10,'Max','(972)444-1111'),
+(11,'Flores','(214)333-6666'),(12,'Clinton','(214)222-5555');
+
+UNLOCK TABLES;
+
+-- Inserting data for Table  `Plane`
+
+LOCK TABLES Plane WRITE;
+
+INSERT INTO Plane VALUES(1,'MD','MD11','2002-09-03','DFW'),
+(2,'MD','MD11','2002-09-04','MDW'),
+(3,'MD','SUPER80','2002-09-01','LAX'),
+(4,'MD','SUPER80','2002-09-03','ORD'),
+(5,'MD','SUPER80','2002-09-06','LGA'),
+(6,'BOEING','727','2002-09-01','DFW'),
+(7,'BOEING','757','2002-10-02','LAX'),
+(8,'AIRBUS','A300','2002-09-01','INT'),
+(9,'AIRBUS','A320','2002-09-04','LOG');
+
+UNLOCK TABLES;
+
+
+-- Inserting data for Table  `PlaneSeats`
+
+LOCK TABLES PlaneSeats WRITE;
+
+INSERT INTO PlaneSeats VALUES('MD','MD11','F',20),('MD','MD11','E',150),
+('MD','SUPER80','F',10),('MD','SUPER80','E',90),
+('BOEING','727','F',10),('BOEING','727','E',110),
+('BOEING','757','F',20),('BOEING','757','E',160),
+('AIRBUS','A300','F',20),('AIRBUS','A300','E',160),
+('AIRBUS','A320','F',30),('AIRBUS','A320','E',200);
+
+UNLOCK TABLES;
+
+-- Inserting data for Table  `FlightInstance`
+
+LOCK TABLES FlightInstance WRITE;
+
+INSERT INTO FlightInstance VALUES(1000,'2002-10-05'),(1000,'2002-10-06'),
+(1000,'2002-10-07'),(1010,'2002-10-05'),
+(1010,'2002-10-06'),(1020,'2002-10-05'),
+(1030,'2002-10-05'),(1040,'2002-10-07');
+
+UNLOCK TABLES;
+
+-- Inserting data into Table `FlightLeg`
+
+
+LOCK TABLES FlightLeg WRITE;
+
+INSERT INTO FlightLeg VALUES(1000,1,'DFW','LOG','2002-01-01 10:20:00','2001-01-01 13:40:00',7),
+(1010,1,'LAX','ORD','2001-01-01 13:10:00','2001-01-01 16:20:00',3),
+(1010,2,'ORD','JFK','2001-01-01 17:10:00','2001-01-01 20:20:00',3),
+(1020,1,'LOG','JFK','2001-01-01 05:40:00','2001-01-01 06:20:00',9),
+(1020,2,'JFK','DFW','2001-01-01 07:20:00','2001-01-01 10:20:00',9),
+(1020,3,'DFW','INT','2001-01-01 11:10:00','2001-01-01 11:40:00',7),
+(1020,4,'INT','LAX','2001-01-01 12:20:00','2001-01-01 15:10:00',7),
+(1030,1,'LAX','INT','2001-01-01 11:20:00','2001-01-01 16:10:00',6),
+(1030,2,'INT','DFW','2001-01-01 17:20:00','2001-01-01 18:00:00',6),
+(1040,1,'LAX','LGA','2001-01-01 15:30:00','2001-01-01 21:00:00',1);
+
+UNLOCK TABLES;
+
+-- Inserting data into Table  `FlightLegInstance`
+
+LOCK TABLES FlightLegInstance WRITE;
+
+INSERT INTO FlightLegInstance VALUES(1,1000,'2002-10-05','2002-01-01 10:10:00','2002-01-01 13:10:00',3),
+(1,1000,'2002-10-06','2002-01-01 10:30:00','2002-01-01 14:20:00',8),
+(1,1010,'2002-10-05','2002-01-01 13:20:00','2002-01-01 17:10:00',1),
+(2,1010,'2002-10-05','2002-01-01 18:00:00','2002-01-01 21:00:00',1),
+(1,1010,'2002-10-06','2002-01-01 13:10:00','2002-01-01 16:10:00',3),
+(2,1010,'2002-10-06','2002-01-01 17:00:00','2002-01-01 20:30:00',6),
+(1,1020,'2002-10-05','2002-01-01 05:40:00','2002-01-01 06:30:00',5),
+(2,1020,'2002-10-05','2002-01-01 07:30:00','2002-01-01 10:40:00',5),
+(3,1020,'2002-10-05','2002-01-01 11:30:00','2002-01-01 12:20:00',5),
+(4,1020,'2002-10-05','2002-01-01 13:00:00','2002-01-01 16:00:00',2),
+(1,1030,'2002-10-05','2002-01-01 11:20:00','2002-01-01 16:10:00',8),
+(2,1030,'2002-10-05','2002-01-01 17:20:00','2002-01-01 18:40:00',8),
+(1,1000,'2002-10-07',NULL,NULL,NULL),
+(1,1040,'2002-10-07',NULL,NULL,NULL);
+
+UNLOCK TABLES;
+
+
+-- Inserting data into Table  `Reservation`
+
+LOCK TABLES Reservation WRITE;
+
+INSERT INTO Reservation VALUES(1,1000,'2002-10-05','DFW','LOG','E','2002-09-05',NULL),
+(1,1020,'2002-10-05','LOG','JFK','E','2002-09-14',NULL),
+(2,1020,'2002-10-05','LOG','INT','E','2002-09-04',NULL),
+(3,1020,'2002-10-05','JFK','LAX','E','2002-09-19',NULL),
+(4,1020,'2002-10-05','LOG','LAX','E','2002-09-10',NULL),
+(5,1020,'2002-10-05','LOG','DFW','F','2002-09-29',NULL),
+(6,1010,'2002-10-05','LAX','JFK','E','2002-09-19',NULL),
+(7,1010,'2002-10-05','LAX','ORD','E','2002-09-19',NULL),
+(8,1030,'2002-10-05','LAX','DFW','F','2002-10-05',NULL),
+(3,1010,'2002-10-06','LAX','JFK','E','2002-09-14',NULL),
+(9,1010,'2002-10-06','LAX','JFK','E','2002-09-09',NULL),
+(10,1010,'2002-10-06','ORD','JFK','E','2002-09-07','2002-09-19'),
+(11,1000,'2002-10-06','DFW','LOG','E','2002-09-09',NULL),
+(12,1000,'2002-10-06','DFW','LOG','E','2002-09-19',NULL),
+(1,1010,'2002-10-06','ORD','JFK','E','2002-09-15',NULL),
+(1,1040,'2002-10-07','LAX','LGA','E','2002-10-01',NULL);
+
+UNLOCK TABLES;
+
+
+
+
+
+

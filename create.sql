@@ -1,0 +1,174 @@
+-- Class: CSE 3330-001
+-- Semester: Fall 2018
+-- Student Name: Babu, Ashwin, axb2860
+-- Student ID: 1001392860
+-- Assignment: project #1
+
+-- Creating tables for databases
+
+--Table for Pilot
+CREATE TABLE Pilot (
+	ID INT	NOT NULL,
+	Name VARCHAR(30) NOT NULL,
+	DateHired DATE	NOT NULL,
+	CONSTRAINT PK_Pilot
+	PRIMARY KEY (ID)
+) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+
+--Table for Passenger
+CREATE TABLE Passenger(
+	ID INT NOT NULL,
+	Name VARCHAR(30) NOT NULL,
+	Phone CHAR(13)	NOT NULL,
+	CONSTRAINT PK_Passenger
+		PRIMARY KEY (ID)
+) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+
+--Table for PlaneType
+CREATE TABLE PlaneType(
+	Maker VARCHAR(15) NOT NULL,
+	Model VARCHAR(15) NOT NULL,
+	FlyingSpeed int NOT NULL,
+	GroundSpeed int NOT NULL,
+	CONSTRAINT PK_PlaneType
+		PRIMARY KEY (Maker, Model)
+) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+
+--Table for Airport
+CREATE TABLE Airport(
+	Code CHAR(3) NOT NULL,
+	City VARCHAR(15) NOT NULL,
+	State CHAR(2) NOT NULL,
+	CONSTRAINT PK_Airport
+		PRIMARY KEY (Code)
+) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+
+
+--Table for Flight
+CREATE TABLE Flight(
+	FLNO INT NOT NULL,
+	Meal VARCHAR(15),
+	Smoking CHAR(1),
+	CONSTRAINT PK_Flight
+		PRIMARY KEY (FLNO)
+) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+
+
+--Table for FlightInstance
+CREATE TABLE FlightInstance(
+	FLNO INT NOT NULL,
+	FDate DATE	NOT NULL,
+	CONSTRAINT PK_FlightInstance
+		PRIMARY KEY (FLNO,FDate),
+	CONSTRAINT FK_FlightInstance
+		FOREIGN KEY(FLNO) REFERENCES Flight(FLNO)
+			ON UPDATE CASCADE
+) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+
+--Table for PlaneSeats
+CREATE TABLE PlaneSeats(
+	Maker VARCHAR(15) NOT NULL,
+	Model VARCHAR(15) NOT NULL,
+	SeatType CHAR(1) NOT NULL,
+	NoOfSeats INT NOT NULL,
+	CONSTRAINT PK_PlaneSeats 
+		PRIMARY KEY(Maker,Model,SeatType),
+	CONSTRAINT FK_PlaneSeats
+		FOREIGN KEY(Maker,Model) REFERENCES PlaneType(Maker,Model)
+			ON UPDATE CASCADE
+) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+
+
+
+--Table for Plane
+CREATE TABLE Plane(
+	ID	INT	NOT NULL,
+	Maker VARCHAR(15) NOT NULL,
+	Model 	VARCHAR(15)	NOT NULL,
+	LastMaint DATE NOT NULL,
+	LastMaintA	CHAR(3)	NOT NULL,
+	CONSTRAINT PK_Plane
+		PRIMARY KEY (ID),
+	CONSTRAINT FK_Plane_PlaneType
+		FOREIGN KEY(Maker,Model) REFERENCES PlaneType(Maker,Model)
+			ON UPDATE CASCADE,
+	CONSTRAINT FK_Plane_Airport
+		FOREIGN KEY(LastMaintA) REFERENCES Airport(Code)
+			ON UPDATE CASCADE
+	
+) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+
+
+--Table for Reservation
+CREATE TABLE Reservation (
+	PassID INT NOT NULL,
+	FLNO  INT NOT NULL,
+	FDate DATE NOT NULL,
+	FromA CHAR(3) NOT NULL,
+	ToA CHAR(3) NOT NULL,
+	SeatClass CHAR(1) NOT NULL,
+	DateBooked	DATE NOT NULL,
+	DateCancelled DATE,
+	CONSTRAINT PK_Reservation
+		PRIMARY KEY (PassID,FLNO,FDate),
+	CONSTRAINT FK_Reservation_Passenger
+		FOREIGN KEY(PassID) REFERENCES Passenger(ID)
+			ON UPDATE CASCADE,
+	CONSTRAINT FK_Reservation_Airport_FromA
+		FOREIGN KEY(FromA) REFERENCES Airport(Code)
+			ON UPDATE CASCADE,
+	CONSTRAINT FK_Reservation_Aiport_ToA
+		FOREIGN KEY(ToA) REFERENCES Airport(Code)
+			ON UPDATE CASCADE,
+	CONSTRAINT FK_Reservation_FlightInstance
+		FOREIGN KEY(FLNO,FDate) REFERENCES FlightInstance(FLNO,FDate)
+			ON UPDATE CASCADE
+) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+
+
+--Table for FlightLeg
+CREATE TABLE FlightLeg(
+	FLNO INT NOT NULL,
+	Seq INT NOT NULL,
+	FromA CHAR(3) NOT NULL,
+	ToA CHAR(3) NOT NULL,
+	DeptTime DATETIME NOT NULL,
+	ArrTime	DATETIME NOT NULL,
+	Plane INT NOT NULL,
+	CONSTRAINT PK_FlightLeg
+		PRIMARY KEY (FLNO,Seq),
+	CONSTRAINT FK_FlightLeg_Flight
+		FOREIGN KEY(FLNO) REFERENCES Flight(FLNO)
+			ON UPDATE CASCADE,
+	CONSTRAINT FK_FlightLeg_Airport_FromA
+		FOREIGN KEY(FromA) REFERENCES Airport(Code)
+			ON UPDATE CASCADE,
+	CONSTRAINT FK_FlightLeg_ToA
+		FOREIGN KEY(ToA) REFERENCES Airport(Code)
+			ON UPDATE CASCADE,
+	CONSTRAINT FK_FlightLeg_Plane
+		FOREIGN KEY(Plane) REFERENCES Plane(ID)
+			ON UPDATE CASCADE
+) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+
+
+--Table for FlightLegInstance
+CREATE TABLE FlightLegInstance(
+	Seq	INT	NOT NULL,
+	FLNO INT NOT NULL,
+	FDate DATE NOT NULL,
+	ActDept datetime,
+	ActArr datetime,
+	Pilot INT,
+	CONSTRAINT PK_FlightLegInstance
+		PRIMARY KEY (Seq,FLNO,FDate),
+	CONSTRAINT FK_FlightLegInstance_Pilot
+		FOREIGN KEY(Pilot) REFERENCES Pilot(ID)
+			ON UPDATE CASCADE,
+	CONSTRAINT FK_FlightLegInstance_FlightInstance
+		FOREIGN KEY(FLNO,FDate) REFERENCES FlightInstance(FLNO,FDate)
+			ON UPDATE CASCADE,
+	CONSTRAINT FK_FlightLegInstance_FlightLeg
+		FOREIGN KEY(Seq,FLNO) REFERENCES FlightLeg(Seq,FLNO)
+			ON UPDATE CASCADE
+)
